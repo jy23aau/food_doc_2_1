@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_doc_2_1/checklist_screen.dart';
 import 'package:food_doc_2_1/screens/inventory_screen.dart';
+import 'package:food_doc_2_1/screens/production_orders_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -79,7 +80,7 @@ class DashboardScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const CurrentInventoryScreen(),
+                      builder: (context) => const ProductionOrdersScreen(),
                     ),
                   );
                 },
