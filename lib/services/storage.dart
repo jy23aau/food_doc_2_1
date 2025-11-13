@@ -59,4 +59,11 @@ class StorageService {
     }
     return out;
   }
+
+  /// Delete a record by key
+  Future<void> deleteRecord(String key) async {
+    if (_box.containsKey(key)) {
+      await _box.delete(key);
+    }
+  }
 }
