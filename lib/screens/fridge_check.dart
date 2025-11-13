@@ -96,6 +96,100 @@ class _FridgeCheckScreenState extends State<FridgeCheckScreen> {
     }
   }
 
+  void _showFSAStandards() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('FSA Fridge Temperature Standards'),
+        content: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'UK Food Standards Agency (FSA) Guidance:',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              ),
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.blue[50],
+                  border: Border.all(color: Colors.blue),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Legal Requirement:',
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text('Chilled food must be kept at 8°C or below'),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.green[50],
+                  border: Border.all(color: Colors.green),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Recommended Safe Temperature:',
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text('5°C or below for fridges and displays'),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'This provides a safety margin and ensures optimal food preservation.',
+                      style: TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.red[50],
+                  border: Border.all(color: Colors.red),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Action Required:',
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                    ),
+                    const SizedBox(height: 4),
+                    const Text('If fridge temperature exceeds 5°C, investigate immediately.'),
+                    const SizedBox(height: 4),
+                    const Text('If it exceeds 8°C, food safety is compromised - discard affected items.'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _tempController.dispose();
@@ -196,6 +290,15 @@ class _FridgeCheckScreenState extends State<FridgeCheckScreen> {
                 onPressed: _startListening,
                 icon: const Icon(Icons.mic),
                 label: const Text('Voice'),
+              ),
+              const SizedBox(width: 8),
+              ElevatedButton.icon(
+                onPressed: _showFSAStandards,
+                icon: const Icon(Icons.info),
+                label: const Text('Standards'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                ),
               ),
             ],
           ),
