@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/big_button.dart';
 import 'fridge_check.dart';
 import 'invoice_upload.dart';
+import 'inventory_screen.dart';
 import 'sync.dart';
 import 'oven_logs.dart';
 import 'allergen_plan.dart';
@@ -82,6 +83,16 @@ class DashboardScreen extends StatelessWidget {
                     onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(builder: (_) => const SyncScreen()),
+                    ),
+                  ),
+                  BigButton(
+                    label: 'Current Inventory',
+                    icon: Icons.inventory,
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const CurrentInventoryScreen(),
+                      ),
                     ),
                   ),
                   BigButton(
