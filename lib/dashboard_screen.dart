@@ -18,9 +18,15 @@ class DashboardScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Today\'s Tasks'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text(
+          'Today\'s Tasks',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: const Color(0xFFFFC107), // Vibrant yellow
+        foregroundColor: Colors.black87,
+        elevation: 0,
       ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -28,22 +34,23 @@ class DashboardScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Big Buttons Section
+              const SizedBox(height: 8),
               const Text(
                 'Quick Access',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
               const SizedBox(height: 16),
 
               // Current Inventory Button
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 24),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
+              _buildTrendyButton(
+                context,
+                label: 'Current Inventory',
+                icon: Icons.inventory_2,
+                backgroundColor: const Color(0xFFFFC107), // Vibrant yellow
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -52,30 +59,16 @@ class DashboardScreen extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Column(
-                  children: [
-                    Icon(Icons.inventory_2, size: 36),
-                    SizedBox(height: 8),
-                    Text(
-                      'Current Inventory',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
               ),
 
               const SizedBox(height: 12),
 
               // Production Orders Button
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 24),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
+              _buildTrendyButton(
+                context,
+                label: 'Production Orders',
+                icon: Icons.production_quantity_limits,
+                backgroundColor: const Color(0xFFFF6B35), // Energetic orange
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -84,46 +77,21 @@ class DashboardScreen extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Column(
-                  children: [
-                    Icon(Icons.production_quantity_limits, size: 36),
-                    SizedBox(height: 8),
-                    Text(
-                      'Production Orders',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
               ),
 
               const SizedBox(height: 12),
 
               // Fridge Checks Button
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.purple,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 24),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
+              _buildTrendyButton(
+                context,
+                label: 'Fridge Checks',
+                icon: Icons.kitchen,
+                backgroundColor: const Color(0xFF00D4FF), // Sky blue
                 onPressed: () {
-                  // Navigate to fridge checks
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Fridge Checks coming soon')),
                   );
                 },
-                child: const Column(
-                  children: [
-                    Icon(Icons.kitchen, size: 36),
-                    SizedBox(height: 8),
-                    Text(
-                      'Fridge Checks',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
               ),
 
               const SizedBox(height: 32),
@@ -131,7 +99,11 @@ class DashboardScreen extends StatelessWidget {
               // Daily Tasks Section
               const Text(
                 'Daily Tasks',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
               const SizedBox(height: 16),
 
@@ -143,9 +115,27 @@ class DashboardScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Card(
                     margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: const BorderSide(
+                        color: Color(0xFFFFC107),
+                        width: 1.5,
+                      ),
+                    ),
                     child: ListTile(
-                      title: Text(checklists[index]),
-                      trailing: const Icon(Icons.arrow_forward_ios),
+                      leading: const Icon(
+                        Icons.check_circle_outline,
+                        color: Color(0xFFFFC107),
+                      ),
+                      title: Text(
+                        checklists[index],
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color(0xFFFFC107),
+                      ),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -160,8 +150,58 @@ class DashboardScreen extends StatelessWidget {
                   );
                 },
               ),
+
+              const SizedBox(height: 16),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTrendyButton(
+    BuildContext context, {
+    required String label,
+    required IconData icon,
+    required Color backgroundColor,
+    required VoidCallback onPressed,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: backgroundColor.withOpacity(0.3),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: backgroundColor,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 24),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          elevation: 0,
+        ),
+        onPressed: onPressed,
+        child: Column(
+          children: [
+            Icon(icon, size: 40, color: Colors.white),
+            const SizedBox(height: 12),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );

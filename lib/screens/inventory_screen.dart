@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../services/storage.dart';
-import 'ocr_invoice.dart';
 
 class CurrentInventoryScreen extends StatefulWidget {
   const CurrentInventoryScreen({super.key});
@@ -38,8 +37,10 @@ class _CurrentInventoryScreenState extends State<CurrentInventoryScreen> {
   List<Map<String, dynamic>> _loadOrders() {
     final all = StorageService().queryRecords(type: 'production_order');
     all.sort((a, b) {
-      final ta = DateTime.tryParse(a['timestamp'] as String? ?? '') ?? DateTime(1970);
-      final tb = DateTime.tryParse(b['timestamp'] as String? ?? '') ?? DateTime(1970);
+      final ta =
+          DateTime.tryParse(a['timestamp'] as String? ?? '') ?? DateTime(1970);
+      final tb =
+          DateTime.tryParse(b['timestamp'] as String? ?? '') ?? DateTime(1970);
       return tb.compareTo(ta);
     });
     return all;
@@ -64,7 +65,13 @@ class _CurrentInventoryScreenState extends State<CurrentInventoryScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text('Stock In House', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Text(
+                      'Stock In House',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 8),
                     inventory.isEmpty
                         ? const Text('No inventory records yet')
@@ -76,22 +83,11 @@ class _CurrentInventoryScreenState extends State<CurrentInventoryScreen> {
                               return ListTile(
                                 dense: true,
                                 title: Text(name),
-                                trailing: Text('$qty ${unit}'),
+                                trailing: Text('$qty $unit'),
                               );
                             }).toList(),
                           ),
                     const SizedBox(height: 8),
-                    ElevatedButton.icon(
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const OcrInvoiceScreen()),
-                      ),
-                      icon: const Icon(Icons.camera_alt),
-                      label: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12.0),
-                        child: Text('OCR Invoice / Add Delivery'),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -104,7 +100,13 @@ class _CurrentInventoryScreenState extends State<CurrentInventoryScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text('Ingredients Needed', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Text(
+                      'Ingredients Needed',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 8),
                     const Text('Common ingredients grouped by product:'),
                     const SizedBox(height: 8),
@@ -119,7 +121,9 @@ class _CurrentInventoryScreenState extends State<CurrentInventoryScreen> {
                       ],
                     ),
                     ExpansionTile(
-                      title: const Text('Croissants (incl. Pain au Chocolat, Almond)'),
+                      title: const Text(
+                        'Croissants (incl. Pain au Chocolat, Almond)',
+                      ),
                       children: const [
                         ListTile(title: Text('Strong flour')),
                         ListTile(title: Text('Milk')),
@@ -157,15 +161,25 @@ class _CurrentInventoryScreenState extends State<CurrentInventoryScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text('Production Orders', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Text(
+                      'Production Orders',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 8),
-                    const Text('Create a production order for the morning or evening shift.'),
+                    const Text(
+                      'Create a production order for the morning or evening shift.',
+                    ),
                     const SizedBox(height: 12),
                     Row(
                       children: [
                         Expanded(
                           child: ElevatedButton(
-                            onPressed: _isCreating ? null : () => _createProductionOrder('Morning'),
+                            onPressed: _isCreating
+                                ? null
+                                : () => _createProductionOrder('Morning'),
                             child: const Padding(
                               padding: EdgeInsets.symmetric(vertical: 14.0),
                               child: Text('Morning Order'),
@@ -175,8 +189,12 @@ class _CurrentInventoryScreenState extends State<CurrentInventoryScreen> {
                         const SizedBox(width: 12),
                         Expanded(
                           child: ElevatedButton(
-                            onPressed: _isCreating ? null : () => _createProductionOrder('Evening'),
-                            style: ElevatedButton.styleFrom(backgroundColor: Colors.deepOrange),
+                            onPressed: _isCreating
+                                ? null
+                                : () => _createProductionOrder('Evening'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.deepOrange,
+                            ),
                             child: const Padding(
                               padding: EdgeInsets.symmetric(vertical: 14.0),
                               child: Text('Evening Order'),
@@ -190,7 +208,10 @@ class _CurrentInventoryScreenState extends State<CurrentInventoryScreen> {
               ),
             ),
             const SizedBox(height: 12),
-            const Text('Existing Production Orders', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            const Text(
+              'Existing Production Orders',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 8),
             Expanded(
               child: orders.isEmpty
