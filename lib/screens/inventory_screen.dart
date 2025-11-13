@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/storage.dart';
+import 'ocr_invoice.dart';
 
 class CurrentInventoryScreen extends StatefulWidget {
   const CurrentInventoryScreen({super.key});
@@ -47,6 +48,7 @@ class _CurrentInventoryScreenState extends State<CurrentInventoryScreen> {
   @override
   Widget build(BuildContext context) {
     final orders = _loadOrders();
+    final inventory = StorageService().queryRecords(type: 'inventory');
 
     return Scaffold(
       appBar: AppBar(title: const Text('Current Inventory & Production')),
@@ -55,6 +57,46 @@ class _CurrentInventoryScreenState extends State<CurrentInventoryScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // Stock In House
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text('Stock In House', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    inventory.isEmpty
+                        ? const Text('No inventory records yet')
+                        : Column(
+                            children: inventory.take(6).map((inv) {
+                              final name = inv['name'] ?? 'Unknown';
+                              final qty = inv['current_quantity'] ?? 0;
+                              final unit = inv['unit'] ?? '';
+                              return ListTile(
+                                dense: true,
+                                title: Text(name),
+                                trailing: Text('$qty ${unit}'),
+                              );
+                            }).toList(),
+                          ),
+                    const SizedBox(height: 8),
+                    ElevatedButton.icon(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const OcrInvoiceScreen()),
+                      ),
+                      icon: const Icon(Icons.camera_alt),
+                      label: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12.0),
+                        child: Text('OCR Invoice / Add Delivery'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
             // Ingredients needed for bakery items
             Card(
               child: Padding(
