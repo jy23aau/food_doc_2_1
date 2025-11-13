@@ -55,6 +55,60 @@ class _CurrentInventoryScreenState extends State<CurrentInventoryScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // Ingredients needed for bakery items
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text('Ingredients Needed', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    const Text('Common ingredients grouped by product:'),
+                    const SizedBox(height: 8),
+                    ExpansionTile(
+                      title: const Text('Sourdough Bread'),
+                      children: const [
+                        ListTile(title: Text('Strong white bread flour')),
+                        ListTile(title: Text('Wholemeal flour')),
+                        ListTile(title: Text('Water')),
+                        ListTile(title: Text('Salt')),
+                        ListTile(title: Text('Sourdough starter')),
+                      ],
+                    ),
+                    ExpansionTile(
+                      title: const Text('Croissants (incl. Pain au Chocolat, Almond)'),
+                      children: const [
+                        ListTile(title: Text('Strong flour')),
+                        ListTile(title: Text('Milk')),
+                        ListTile(title: Text('Sugar')),
+                        ListTile(title: Text('Salt')),
+                        ListTile(title: Text('Butter (dough & lamination)')),
+                        ListTile(title: Text('Sourdough starter')),
+                        ListTile(title: Text('Chocolate')),
+                        ListTile(title: Text('Almond extract')),
+                        ListTile(title: Text('Ground almonds')),
+                      ],
+                    ),
+                    ExpansionTile(
+                      title: const Text('Chocolate Brownies'),
+                      children: const [
+                        ListTile(title: Text('Flour (all-purpose)')),
+                        ListTile(title: Text('Sugar')),
+                        ListTile(title: Text('Cocoa solids')),
+                        ListTile(title: Text('Eggs')),
+                        ListTile(title: Text('Unsalted butter')),
+                        ListTile(title: Text('Chocolate')),
+                        ListTile(title: Text('Vanilla extract')),
+                        ListTile(title: Text('Icing sugar')),
+                        ListTile(title: Text('Salt')),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
